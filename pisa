@@ -1,0 +1,109 @@
+package test;
+
+import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+ 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+	
+
+
+public class pizda {
+
+	public static int result = 0;
+	public static int cl = 1;
+	public static int tm = 0;
+	public static int clPrice = 10;
+	public static int tmPrice = 50;
+	
+	public static void main(String args[]) {
+		
+	
+	JFrame window = new JFrame("Могильщик");
+	JButton butCL = new JButton("Попка");
+	JButton butPrice = new JButton(("+1 клик, цена:")+clPrice);
+	JButton TmButPrice = new JButton(("+100 черепов в мин, цена:")+tmPrice);
+	JLabel labelResult = new JLabel(("Черепов ")+result);
+	JLabel clLabel = new JLabel ("Черепов за клик "+cl);
+	JLabel tmLabel = new JLabel ("Черепов в мин "+tm);
+	
+	butCL.setBounds(200,250,200,200);
+	TmButPrice.setBounds(1,140,250,40);
+	butPrice.setBounds(1, 100, 250, 40);
+	labelResult.setBounds(300,100,200,60);
+	clLabel.setBounds(300, 1,300,40);
+	tmLabel.setBounds(300,40,300,40);
+	
+	window.add(butCL);
+	window.add(TmButPrice);
+	window.add(butPrice);
+	window.add(labelResult);
+	window.add(clLabel);
+	window.add(tmLabel);
+	window.setSize(600,600);
+	window.setLayout(null);
+	window.setVisible(true);
+    
+    butCL.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+        	result=result+cl;
+            labelResult.setText("Черепов "+result);
+        }
+    });
+    
+    butPrice.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+        	if 		(result>=clPrice)
+        	{result=result-clPrice;
+        	cl++;
+        	clPrice=clPrice+(clPrice/2);
+        	butPrice.setText(("+1 клик, цена:")+clPrice);
+        	labelResult.setText(("Черепов ")+result);
+        	clLabel.setText("Черепов за клик "+cl);
+        	}
+        }
+    });
+ 
+    TmButPrice.addActionListener(new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if 		(result>=tmPrice)
+        	{result=result-tmPrice;
+        	tm=tm+100;
+        	tmPrice=tmPrice+(tmPrice/2);
+        	TmButPrice.setText(("+100 черепов в мин, цена:")+tmPrice);
+        	labelResult.setText(("Черепов ")+result);
+        	tmLabel.setText("Черепов в мин "+tm);  
+ 
+        	}
+			
+		}
+	});
+    
+    Timer clTimer = new Timer();
+
+    clTimer.scheduleAtFixedRate(new TimerTask() {
+        
+        public void run() {
+        	result=result+tm;
+        	labelResult.setText(("Черепов ")+result);
+        	
+            
+        }
+    }, 0, 60000);
+    
+    
+	}
+}	
+
